@@ -18,12 +18,15 @@ package com.android.deskclock.actionbarmenu;
 
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.SearchView.OnQueryTextListener;
+//import android.support.v7.widget.SearchView;
+import android.widget.SearchView;
+//import android.support.v7.widget.SearchView.OnQueryTextListener;
+import android.widget.SearchView.OnQueryTextListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.util.Log;
 
 import com.android.deskclock.R;
 
@@ -63,7 +66,7 @@ public final class SearchMenuItemController extends AbstractMenuItemController {
     public void setInitialState(Menu menu) {
         super.setInitialState(menu);
         final MenuItem search = menu.findItem(SEARCH_MENU_RES_ID);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
+        final SearchView searchView = (SearchView) search.getActionView();//MenuItemCompat.getActionView(search);
         searchView.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         searchView.setQuery(mQuery, false);
         searchView.setOnCloseListener(mSearchModeChangeListener);
