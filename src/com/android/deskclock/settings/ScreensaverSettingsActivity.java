@@ -24,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.android.deskclock.R;
+import com.android.deskclock.Utils;
 
 /**
  * Settings for Clock Daydream
@@ -58,6 +59,12 @@ public final class ScreensaverSettingsActivity extends AppCompatActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
+            //fix cannot save and effect ScreensaverSettings's setting item
+            if (Utils.isNOrLater()) {
+                getPreferenceManager().setStorageDeviceProtected();
+            }
+
             addPreferencesFromResource(R.xml.dream_settings);
         }
 
