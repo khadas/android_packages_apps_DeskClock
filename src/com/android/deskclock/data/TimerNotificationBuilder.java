@@ -160,6 +160,7 @@ class TimerNotificationBuilder {
                 .setSortKey(nm.getTimerNotificationSortKey())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                .setChannelId(StopwatchNotificationBuilder.getNotifyChannelStopWatchId(context))
                 .setColor(ContextCompat.getColor(context, R.color.default_background));
 
         for (Action action : actions) {
@@ -272,6 +273,7 @@ class TimerNotificationBuilder {
                 .setSmallIcon(R.drawable.stat_notify_timer)
                 .setFullScreenIntent(pendingFullScreen, true)
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                .setChannelId(StopwatchNotificationBuilder.getNotifyChannelStopWatchId(context))
                 .setColor(ContextCompat.getColor(context, R.color.default_background));
 
         for (Action action : actions) {
@@ -355,6 +357,7 @@ class TimerNotificationBuilder {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setSortKey(nm.getTimerNotificationMissedSortKey())
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                .setChannelId(StopwatchNotificationBuilder.getNotifyChannelStopWatchId(context))
                 .addAction(action)
                 .setColor(ContextCompat.getColor(context, R.color.default_background));
 

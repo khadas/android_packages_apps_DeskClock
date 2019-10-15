@@ -17,6 +17,8 @@
 package com.android.deskclock.data;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -45,6 +47,7 @@ import static android.view.View.VISIBLE;
  * Builds notification to reflect the latest state of the stopwatch and recorded laps.
  */
 class StopwatchNotificationBuilder {
+    private final static String CHANNEL_ID_STOP_WATCH = "deskclock_stop_watch";
 
     public Notification build(Context context, NotificationModel nm, Stopwatch stopwatch) {
         @StringRes final int eventLabel = R.string.label_notification;
@@ -136,6 +139,7 @@ class StopwatchNotificationBuilder {
                 .setPriority(Notification.PRIORITY_MAX)
                 .setSmallIcon(R.drawable.stat_notify_stopwatch)
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                .setChannelId(getNotifyChannelStopWatchId(context))
                 .setColor(ContextCompat.getColor(context, R.color.default_background));
 
         if (Utils.isNOrLater()) {
@@ -147,5 +151,24 @@ class StopwatchNotificationBuilder {
         }
 
         return notification.build();
+    }
+
+    public static String getNotifyChannelStopWatchId(Context context){
+        // create android channel
+        NotificationChannel androidChannel = new NotificationChannel(CHANNEL_ID_STOP_WATCH,
+                CHANNEL_ID_STOP_WATCH, NotificationManager.IMPORTANCE_DEFAULT);
+        // Sets whether notifications posted to this channel should display notification lights
+        androidChannel.enableLights(true);
+        // Sets whether notification posted to this channel should vibrate.
+        //androidChannel.enableVibration(true);
+        // Sets the notification light color for notifications posted to this channel
+        //androidChannel.setLightColor(Color.GREEN);
+        // Sets whether notifications posted to this channel appear on the lockscreen or not
+        androidChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+
+        final NotificationManager nm =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.createNotificationChannel(androidChannel);
+        return CHANNEL_ID_STOP_WATCH;
     }
 }
