@@ -760,6 +760,8 @@ internal class TimerModel(
         // Otherwise build and post a foreground notification reflecting the latest expired timers.
         val notification: Notification = mNotificationBuilder.buildHeadsUp(mContext, expired)
         val notificationId = mNotificationModel.expiredTimerNotificationId
+        // channel maybe not create because app not in background sometime,so build again
+        mNotificationBuilder.buildChannel(mContext, mNotificationManager)
         mService!!.startForeground(notificationId, notification)
     }
 
