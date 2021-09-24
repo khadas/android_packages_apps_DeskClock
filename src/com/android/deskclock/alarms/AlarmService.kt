@@ -24,6 +24,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Binder
 import android.os.IBinder
+import android.os.PowerManager
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 
@@ -147,6 +148,10 @@ class AlarmService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         LogUtils.v("AlarmService.onStartCommand() with %s", intent)
+        val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+        pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP
+                or PowerManager.FULL_WAKE_LOCK, "DeskClockWake").acquire(5000)
+
         if (intent == null) {
             return Service.START_NOT_STICKY
         }
